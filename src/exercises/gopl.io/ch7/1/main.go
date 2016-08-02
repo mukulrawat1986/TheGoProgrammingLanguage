@@ -6,6 +6,7 @@ import (
 	"fmt"
 )
 
+// WordCounter counts the number of words written
 type WordCounter int
 
 func (w *WordCounter) Write(p []byte) (int, error) {
@@ -24,6 +25,29 @@ func (w *WordCounter) Write(p []byte) (int, error) {
 
 	for s.Scan() {
 		*w++
+	}
+
+	return len(p), nil
+}
+
+// LineCounter counts the number of lines written
+type LineCounter int
+
+func (l *LineCounter) Write(p []byte) (int, error) {
+
+	// initialize the line counter
+	*l = 0
+
+	// create a bytes Buffer from the byte slice we are writing
+	b := bytes.NewBuffer(p)
+
+	// create a new scanner from this buffer
+	s := bufio.NewScanner(b)
+
+	// the split function splits on lines by default
+
+	for s.Scan() {
+		*l++
 	}
 
 	return len(p), nil
@@ -49,4 +73,10 @@ func main() {
 	// print out the number of words
 	fmt.Println(w)
 
+	// create a line counter
+	var l LineCounter
+
+	l.Write([]byte("Hello\n World"))
+
+	fmt.Println(l)
 }
