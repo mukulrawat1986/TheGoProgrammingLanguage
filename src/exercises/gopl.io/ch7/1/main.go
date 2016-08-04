@@ -76,7 +76,10 @@ func main() {
 	// create a line counter
 	var l LineCounter
 
+	// test out the line counter
 	l.Write([]byte("Hello\n World"))
+	fmt.Println(l)
 
+	l.Write([]byte("None\n"))
 	fmt.Println(l)
 }
